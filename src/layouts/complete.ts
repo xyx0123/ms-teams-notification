@@ -39,7 +39,9 @@ export function formatCompleteLayout(
   conclusion: string,
   elapsedSeconds?: number
 ) {
-  const repoUrl = `https://github.com/${process.env.GITHUB_REPOSITORY}`;
+  // const repoUrl = `https://github.com/${process.env.GITHUB_REPOSITORY}`
+  const githubHost = getInput("github-enterprise-host", { required: false });
+  const repoUrl = `https://${githubHost}/${process.env.GITHUB_REPOSITORY}`;
   const branchUrl = `${repoUrl}/tree/${process.env.GITHUB_REF}`;
   const webhookBody = formatCozyLayout(commit, conclusion, elapsedSeconds);
   const section = webhookBody.sections[0];

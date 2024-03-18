@@ -24,11 +24,12 @@ export function escapeMarkdownTokens(text: string) {
 
 export function getRunInformation() {
   const [owner, repo] = (process.env.GITHUB_REPOSITORY || "").split("/");
+  const githubHost = getInput("github-enterprise-host", { required: false });
   return {
     owner,
     repo,
     ref: process.env.GITHUB_SHA || undefined,
-    branchUrl: `https://github.com/${process.env.GITHUB_REPOSITORY}/tree/${process.env.GITHUB_REF}`,
+    branchUrl: `https://${githubHost}/${process.env.GITHUB_REPOSITORY}/tree/${process.env.GITHUB_REF}`,
     runId: process.env.GITHUB_RUN_ID || undefined,
     runNum: process.env.GITHUB_RUN_NUMBER || undefined,
   };
@@ -59,7 +60,7 @@ export function submitNotification(webhookBody: WebhookBody) {
     },
     body: webhookBodyJson,
   })
-    .then((response: Response) => {
+    .then(response => {
       setOutput("webhook-body", webhookBodyJson);
       info(webhookBodyJson);
       return response;
@@ -152,7 +153,7 @@ export async function getWorkflowRunStatus() {
       conclusion: lastStep?.conclusion,
     }
 
-  } catch (error) {
+  } catch (error: any) {
     console.log(error.message);
   };
 
