@@ -80,7 +80,10 @@ inputs:
     description: name of parent job in case of workflow_call event
     required: false
     default: ""
-
+  github-enterprise-host:
+    description: if you are using the github enterprise, this is your enterprise host. such as company-github.com Default is github.com.
+    required: false
+    default: "github.com"
 runs:
   using: node12
   main: dist/main/index.js

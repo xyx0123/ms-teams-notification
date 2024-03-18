@@ -22,6 +22,6 @@ try {
       info("Configured to not show card upon job exit.");
     }
   }, 2000);
-} catch (error) {
+} catch (error: any) {
   setFailed(error.message);
 }

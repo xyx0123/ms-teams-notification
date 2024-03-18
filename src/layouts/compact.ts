@@ -9,7 +9,8 @@ export function formatCompactLayout(
   elapsedSeconds?: number
 ) {
   const author = commit.data.author;
-  const repoUrl = `https://github.com/${process.env.GITHUB_REPOSITORY}`;
+  const githubHost = getInput("github-enterprise-host", { required: false });
+  const repoUrl = `https://${githubHost}/${process.env.GITHUB_REPOSITORY}`;
   const shortSha = process.env.GITHUB_SHA?.substr(0, 7);
   const runLink = `${repoUrl}/actions/runs/${process.env.GITHUB_RUN_ID}`;
   const webhookBody = new WebhookBody();
